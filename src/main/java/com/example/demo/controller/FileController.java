@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.model.File;
 import com.example.demo.repository.FileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,8 @@ import java.util.UUID;
 @RequestMapping("/files")
 public class FileController {
 
-    private final FileRepository fileRepository;
-    FileController(FileRepository fileRepository){
-        this.fileRepository = fileRepository;
-    }
+    @Autowired
+    private FileRepository fileRepository;
 
     @PostMapping
     public String upload(@RequestParam("file") MultipartFile uploadedFile) {

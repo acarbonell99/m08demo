@@ -1,29 +1,33 @@
-CREATE TABLE IF NOT EXISTS movie (
+CREATE TABLE movie (
     movieid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     title text,
     synopsis text,
     imageurl text);
 
-CREATE TABLE IF NOT EXISTS actor (
+CREATE TABLE actor (
     actorid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     name text,
     imageurl text);
 
-CREATE TABLE IF NOT EXISTS genre (
+CREATE TABLE genre (
     genreid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     label text);
 
-CREATE TABLE IF NOT EXISTS movie_actor (
+CREATE TABLE movie_actor (
     movieid uuid REFERENCES movie(movieid) ON DELETE CASCADE,
     actorid uuid REFERENCES actor(actorid) ON DELETE CASCADE,
     PRIMARY KEY (movieid, actorid));
 
-CREATE TABLE IF NOT EXISTS movie_genre (
+CREATE TABLE movie_genre (
     movieid uuid REFERENCES movie(movieid) ON DELETE CASCADE,
     genreid uuid REFERENCES genre(genreid) ON DELETE CASCADE,
     PRIMARY KEY (movieid, genreid));
 ;
 
+
+
+
+-- afegim dades de prova
 INSERT INTO movie(title, synopsis, imageurl) VALUES
     ('Movie One','This is the One Movie','movie1.jpg'),
     ('Movie Two','The Two Movie is the next','movie2.jpg'),
