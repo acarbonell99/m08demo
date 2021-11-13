@@ -15,5 +15,4 @@ public class User {
     public String password;
     public String role;
     public boolean enabled;
-
 }
