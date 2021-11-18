@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.dto.ErrorMessage;
+import com.example.demo.domain.dto.FileResult;
 import com.example.demo.domain.model.File;
 import com.example.demo.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +22,33 @@ public class FileController {
     private FileRepository fileRepository;
 
     @PostMapping
-    public String upload(@RequestParam("file") MultipartFile uploadedFile) {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile uploadedFile) {
         try {
             File file = new File();
             file.contenttype = uploadedFile.getContentType();
             file.data = uploadedFile.getBytes();
 
-            return fileRepository.save(file).fileid.toString();
+            File savedFile = fileRepository.save(file);
+
+            FileResult fileResult = new FileResult();
+            fileResult.fileid = savedFile.fileid;
+            fileResult.contenttype = savedFile.contenttype;
+
+            return ResponseEntity.ok().body(fileResult);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return ResponseEntity.internalServerError().build();
         }
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable UUID id) {
+    public ResponseEntity<?> getFile(@PathVariable UUID id) {
         File file = fileRepository.findById(id).orElse(null);
 
-        if (file == null) return ResponseEntity.notFound().build();
+        if (file == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ErrorMessage.message("File not found"));
 
         return ResponseEntity.ok()
                 .contentType(MediaType.valueOf(file.contenttype))
@@ -45,8 +56,13 @@ public class FileController {
                 .body(file.data);
     }
 
-
     @GetMapping
+    public ResponseEntity<?> getAll(){
+        return ResponseEntity.ok().body(fileRepository.getFileIds());
+    }
+
+
+    @GetMapping("/web")
     public String hack() {
         return "<form method='POST' enctype='multipart/form-data' style='display:flex;'>" +
                 "<input id='file' type='file' name='file' style='display:none' onchange='preview.src=window.URL.createObjectURL(event.target.files[0])'>" +

@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.dto.ErrorMessage;
 import com.example.demo.domain.dto.UserRegisterRequest;
 import com.example.demo.domain.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,19 +20,19 @@ public class UserController {
     @Autowired private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping(path = "/register" )
-    public String register(@RequestBody UserRegisterRequest userRegisterRequest) {
+    public ResponseEntity<?> register(@RequestBody UserRegisterRequest userRegisterRequest) {
 
         if (userRepository.findByUsername(userRegisterRequest.username) == null) {
             User user = new User();
             user.username = userRegisterRequest.username;
             user.password = passwordEncoder.encode(userRegisterRequest.password);
             user.enabled = true;
-            return userRepository.save(user).userid.toString();
+            return ResponseEntity.ok().body(userRepository.save(user).userid.toString());
         }
-        return "ERROR";
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ErrorMessage.message("Nom d'usuari no disponible"));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<User> getALl(){
         return userRepository.findAll();
     }
