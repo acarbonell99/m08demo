@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.dto.ErrorMessage;
 import com.example.demo.domain.dto.UserRegisterRequest;
+import com.example.demo.domain.dto.UserResult;
 import com.example.demo.domain.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getALl(){
-        return userRepository.findAll();
+    public List<UserResult> getALl(){
+        return userRepository.findBy();
     }
 
 

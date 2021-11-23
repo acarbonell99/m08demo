@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.domain.dto.FileResult;
 import com.example.demo.domain.model.File;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,4 +11,6 @@ import java.util.UUID;
 public interface FileRepository extends JpaRepository<File, UUID> {
     @Query("select fileid from File")
     List<String> getFileIds();
+
+    List<FileResult> findBy();
 }

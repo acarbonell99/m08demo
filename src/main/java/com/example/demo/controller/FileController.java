@@ -30,9 +30,7 @@ public class FileController {
 
             File savedFile = fileRepository.save(file);
 
-            FileResult fileResult = new FileResult();
-            fileResult.fileid = savedFile.fileid;
-            fileResult.contenttype = savedFile.contenttype;
+            FileResult fileResult = new FileResult(savedFile.fileid, savedFile.contenttype);
 
             return ResponseEntity.ok().body(fileResult);
         } catch (Exception e) {
@@ -58,7 +56,7 @@ public class FileController {
 
     @GetMapping
     public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok().body(fileRepository.getFileIds());
+        return ResponseEntity.ok().body(fileRepository.findBy());
     }
 
 
