@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
                 .authorizeRequests()
-                    .mvcMatchers("/users/register/web", "/users/all/").permitAll()
+                    .mvcMatchers(HttpMethod.GET, "/users/register/web").permitAll()
                     .mvcMatchers(HttpMethod.POST,"/users/register/").permitAll()
 //                    .anyRequest().authenticated()
                     .anyRequest().permitAll()
