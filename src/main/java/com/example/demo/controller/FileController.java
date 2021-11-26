@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.ErrorMessage;
-import com.example.demo.domain.dto.FileResult;
+import com.example.demo.domain.dto.ResponseMessage;
+import com.example.demo.domain.dto.ResponseFile;
 import com.example.demo.domain.model.File;
 import com.example.demo.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +30,9 @@ public class FileController {
 
             File savedFile = fileRepository.save(file);
 
-            FileResult fileResult = new FileResult(savedFile.fileid, savedFile.contenttype);
+            ResponseFile responseFile = new ResponseFile(savedFile.fileid, savedFile.contenttype);
 
-            return ResponseEntity.ok().body(fileResult);
+            return ResponseEntity.ok().body(responseFile);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
@@ -46,7 +46,7 @@ public class FileController {
 
         if (file == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ErrorMessage.message("File not found"));
+                .body(ResponseMessage.message("File not found"));
 
         return ResponseEntity.ok()
                 .contentType(MediaType.valueOf(file.contenttype))

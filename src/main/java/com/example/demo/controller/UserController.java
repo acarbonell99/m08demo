@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.ErrorMessage;
-import com.example.demo.domain.dto.UserRegisterRequest;
-import com.example.demo.domain.dto.UserResult;
+import com.example.demo.domain.dto.ResponseMessage;
+import com.example.demo.domain.dto.RequestUserRegister;
+import com.example.demo.domain.dto.ResponseUser;
 import com.example.demo.domain.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +21,20 @@ public class UserController {
     @Autowired private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping(path = "/register" )
-    public ResponseEntity<?> register(@RequestBody UserRegisterRequest userRegisterRequest) {
+    public ResponseEntity<?> register(@RequestBody RequestUserRegister requestUserRegister) {
 
-        if (userRepository.findByUsername(userRegisterRequest.username) == null) {
+        if (userRepository.findByUsername(requestUserRegister.username) == null) {
             User user = new User();
-            user.username = userRegisterRequest.username;
-            user.password = passwordEncoder.encode(userRegisterRequest.password);
+            user.username = requestUserRegister.username;
+            user.password = passwordEncoder.encode(requestUserRegister.password);
             user.enabled = true;
             return ResponseEntity.ok().body(userRepository.save(user).userid.toString());
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ErrorMessage.message("Nom d'usuari no disponible"));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseMessage.message("Nom d'usuari no disponible"));
     }
 
     @GetMapping
-    public List<UserResult> getALl(){
+    public List<ResponseUser> getALl(){
         return userRepository.findBy();
     }
 

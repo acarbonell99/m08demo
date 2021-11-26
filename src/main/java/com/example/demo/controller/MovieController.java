@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.ListResult;
+import com.example.demo.domain.dto.ResponseList;
 import com.example.demo.domain.model.Movie;
 import com.example.demo.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class MovieController {
 
     @GetMapping("/")
     public ResponseEntity<?> findAllMovies(Authentication authentication) {
-        return ResponseEntity.ok().body(ListResult.list(movieRepository.findAll()));
+        return ResponseEntity.ok().body(ResponseList.list(movieRepository.findAll()));
     }
 
     @PostMapping("/")
