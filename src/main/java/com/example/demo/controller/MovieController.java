@@ -15,9 +15,10 @@ public class MovieController {
     @Autowired
     private MovieRepository movieRepository;
 
+
     @GetMapping("/")
     public ResponseEntity<?> findAllMovies(Authentication authentication) {
-        return ResponseEntity.ok().body(ResponseList.list(movieRepository.findAll()));
+        return ResponseEntity.ok().body(ResponseList.list(movieRepository.findBy()));
     }
 
     @PostMapping("/")

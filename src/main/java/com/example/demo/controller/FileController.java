@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.ResponseMessage;
 import com.example.demo.domain.dto.ResponseFile;
+import com.example.demo.domain.dto.ResponseMessage;
 import com.example.demo.domain.model.File;
 import com.example.demo.repository.FileRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +26,20 @@ public class FileController {
     private FileRepository fileRepository;
 
     @PostMapping
-    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile uploadedFile) {
+    @Operation(
+            summary = "Finds a person",
+            description = "Finds a person by their Id.",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseFile.class))
+                    ),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
+            }
+    )
+    public ResponseEntity<ResponseFile> upload(@RequestPart(name = "file") MultipartFile uploadedFile) {
         try {
             File file = new File();
             file.contenttype = uploadedFile.getContentType();
@@ -62,7 +79,7 @@ public class FileController {
 
     @GetMapping("/web")
     public String hack() {
-        return "<form method='POST' enctype='multipart/form-data' style='display:flex;'>" +
+        return "<form method='POST' enctype='multipart/form-data' action='/files/' style='display:flex;'>" +
                 "<input id='file' type='file' name='file' style='display:none' onchange='preview.src=window.URL.createObjectURL(event.target.files[0])'>" +
                 "<label for='file' style='border:1px dashed #999'><img id='preview' style='width:64px;max-height:64px;object-fit:contain;border:none'></label>" +
                 "<input type='submit' style='background:#0096f7;color: white;border: 0;border-radius: 3px;padding: 8px;' value='Upload'>" +

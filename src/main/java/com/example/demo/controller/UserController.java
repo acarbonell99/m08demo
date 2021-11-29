@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.ResponseMessage;
 import com.example.demo.domain.dto.RequestUserRegister;
-import com.example.demo.domain.dto.ResponseUser;
+import com.example.demo.domain.dto.ResponseList;
+import com.example.demo.domain.dto.ResponseMessage;
 import com.example.demo.domain.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -34,8 +32,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<ResponseUser> getALl(){
-        return userRepository.findBy();
+    public ResponseEntity<?> getALl(){
+        return ResponseEntity.ok().body(ResponseList.list(userRepository.findBy()));
     }
 
 

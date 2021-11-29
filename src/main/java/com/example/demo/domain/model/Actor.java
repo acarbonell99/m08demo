@@ -19,4 +19,5 @@ public class Actor {
     @ManyToMany(mappedBy = "actors")
     @JsonIgnoreProperties("actors")
     public Set<Movie> movies;
+
 }
