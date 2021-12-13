@@ -1,4 +1,4 @@
-package com.example.demo.domain.model.projections;
+package com.example.demo.domain.model.projection;
 
 import java.util.UUID;
 

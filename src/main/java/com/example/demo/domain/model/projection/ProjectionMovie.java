@@ -9,6 +9,7 @@ import java.util.UUID;
 public interface ProjectionMovie {
     UUID getMovieid();
     String getTitle();
+
     @JsonIgnoreProperties("movies")
     Set<ProjectionActor> getActors();
 }

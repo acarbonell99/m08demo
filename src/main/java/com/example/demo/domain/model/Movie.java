@@ -17,4 +17,8 @@ public class Movie {
     @ManyToMany
     @JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name ="movieid"), inverseJoinColumns = @JoinColumn(name = "actorid"))
     public Set<Actor> actors;
+
+    @ManyToMany
+    @JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name ="movieid"), inverseJoinColumns = @JoinColumn(name = "genreid"))
+    public Set<Genre> genres;
 }

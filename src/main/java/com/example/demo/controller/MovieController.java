@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.domain.dto.ResponseList;
 import com.example.demo.domain.model.Movie;
 import com.example.demo.domain.model.projection.ProjectionMovie;
-import com.example.demo.domain.model.projection.ProjectionMovieValero;
 import com.example.demo.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +19,6 @@ public class MovieController {
     @GetMapping("/")
     public ResponseEntity<?> findAllMovies(Authentication authentication) {
         return ResponseEntity.ok().body(new ResponseList(movieRepository.findBy(ProjectionMovie.class)));
-    }
-
-    @GetMapping("/valero")
-    public ResponseEntity<?> findAllMoviesValero(Authentication authentication) {
-        return ResponseEntity.ok().body(new ResponseList(movieRepository.findBy(ProjectionMovieValero.class)));
     }
 
     @PostMapping("/")
