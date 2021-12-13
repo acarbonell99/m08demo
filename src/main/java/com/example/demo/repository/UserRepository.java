@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.domain.model.projection.ProjectionUser;
 import com.example.demo.domain.model.User;
+import com.example.demo.domain.model.projection.ProjectionUserDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     <T> List<T> findByUsername(String username, Class<T> type);
 
     List<ProjectionUser> findBy();
+
+    <T> List<T> findByUserid(UUID id, Class<T> type);
 }

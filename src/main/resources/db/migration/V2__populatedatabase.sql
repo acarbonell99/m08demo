@@ -1,5 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 INSERT INTO usser (username, password) VALUES ('user', crypt('pass', gen_salt('bf')));
+INSERT INTO usser (username, password) VALUES ('pepe', crypt('pass', gen_salt('bf')));
 
 
 INSERT INTO movie(title, synopsis, imageurl) VALUES
@@ -37,3 +38,6 @@ INSERT INTO movie_genre VALUES
     ((SELECT movieid FROM movie WHERE title='Movie Three'),(SELECT genreid FROM genre WHERE label='Genre One')),
     ((SELECT movieid FROM movie WHERE title='Movie Three'),(SELECT genreid FROM genre WHERE label='Genre Two')),
     ((SELECT movieid FROM movie WHERE title='Movie Three'),(SELECT genreid FROM genre WHERE label='Genre Three'));
+
+INSERT INTO favorite VALUES
+    ((SELECT userid FROM usser WHERE username = 'user'),(SELECT movieid FROM movie WHERE title='Movie One'));

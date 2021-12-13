@@ -21,4 +21,8 @@ public class Movie {
     @ManyToMany
     @JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name ="movieid"), inverseJoinColumns = @JoinColumn(name = "genreid"))
     public Set<Genre> genres;
+
+    @ManyToMany
+    @JoinTable(name = "favorite", joinColumns = @JoinColumn(name ="movieid"), inverseJoinColumns = @JoinColumn(name = "userid"))
+    public Set<User> favoritedby;
 }
