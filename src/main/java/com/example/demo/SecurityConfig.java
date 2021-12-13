@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .mvcMatchers("/users/register/web", "/users/all/").permitAll()
                     .mvcMatchers(HttpMethod.POST,"/users/register/").permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
                 .and()
                 .httpBasic();
     }
@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from usser where username = ?")
+                .usersByUsernameQuery("select username, password, true as enabled from usser where username = ?")
                 .authoritiesByUsernameQuery("select username, role from usser where username = ?")
                 .passwordEncoder(getPasswordEncoder());
     }

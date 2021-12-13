@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.dto.ResponseList;
 import com.example.demo.domain.model.Movie;
+import com.example.demo.domain.model.projection.ProjectionMovie;
+import com.example.demo.domain.model.projection.ProjectionMovieValero;
 import com.example.demo.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
@@ -16,8 +18,13 @@ public class MovieController {
     private MovieRepository movieRepository;
 
     @GetMapping("/")
-    public List<Movie> findAllMovies(Authentication authentication) {
-        return movieRepository.findAll();
+    public ResponseEntity<?> findAllMovies(Authentication authentication) {
+        return ResponseEntity.ok().body(new ResponseList(movieRepository.findBy(ProjectionMovie.class)));
+    }
+
+    @GetMapping("/valero")
+    public ResponseEntity<?> findAllMoviesValero(Authentication authentication) {
+        return ResponseEntity.ok().body(new ResponseList(movieRepository.findBy(ProjectionMovieValero.class)));
     }
 
     @PostMapping("/")
