@@ -14,7 +14,7 @@ public class Movie {
     public String title;
     public String imageurl;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name ="movieid"), inverseJoinColumns = @JoinColumn(name = "actorid"))
     public Set<Actor> actors;
 

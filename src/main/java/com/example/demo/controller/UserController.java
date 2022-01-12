@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.dto.RequestFavorite;
 import com.example.demo.domain.model.Favorite;
 import com.example.demo.domain.dto.RequestUserRegister;
 import com.example.demo.domain.dto.ResponseList;
 import com.example.demo.domain.dto.ResponseMessage;
 import com.example.demo.domain.model.User;
+import com.example.demo.domain.model.projection.ProjectionFavorites;
 import com.example.demo.domain.model.projection.ProjectionUserDetail;
 import com.example.demo.repository.FavoriteRepository;
 import com.example.demo.repository.UserRepository;
@@ -48,17 +50,53 @@ public class UserController {
         return ResponseEntity.ok().body(ResponseList.list(userRepository.findByUserid(id, ProjectionUserDetail.class)));
     }
 
-    @PostMapping("/{id}/favorites")
-    public ResponseEntity<?> addFavorite(@RequestBody Favorite favorite, Authentication authentication) {
-        if (userRepository.findByUsername(authentication.getName()).userid.equals(favorite.userid)) {
-            favoriteRepository.save(favorite);
-            return ResponseEntity.ok().build();
+    @PostMapping("/favorites")
+    public ResponseEntity<?> addFavorite(@RequestBody RequestFavorite requestFavorite, Authentication authentication) {
+        if (authentication != null) {
+            User authenticatedUser = userRepository.findByUsername(authentication.getName());
+
+            if (authenticatedUser != null) {
+                Favorite favorite = new Favorite();
+                favorite.movieid = requestFavorite.movieid;
+                favorite.userid = authenticatedUser.userid;
+                favoriteRepository.save(favorite);
+                return ResponseEntity.ok().build();
+            }
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseMessage.message("Not authorized"));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseMessage.message("No autorizado"));
     }
 
+    @DeleteMapping("/favorites")
+    public ResponseEntity<?> delFavorite(@RequestBody RequestFavorite requestFavorite, Authentication authentication) {
+        if (authentication != null) {
+            User authenticatedUser = userRepository.findByUsername(authentication.getName());
 
+            if (authenticatedUser != null) {
+                Favorite favorite = new Favorite();
+                favorite.movieid = requestFavorite.movieid;
+                favorite.userid = authenticatedUser.userid;
+                favoriteRepository.delete(favorite);
+                return ResponseEntity.ok().build();
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseMessage.message("No autorizado"));
+    }
+
+    @GetMapping("/favorites")
+    public ResponseEntity<?> getFavorites(Authentication authentication) {
+        if (authentication != null) {
+            User authenticatedUser = userRepository.findByUsername(authentication.getName());
+
+            if (authenticatedUser != null) {
+//            userRepository.findByUsername(authentication.getName(), ProjectionFavorites.class);
+                return ResponseEntity.ok().body(userRepository.findByUsername(authentication.getName(), ProjectionFavorites.class));
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseMessage.message("No autorizado"));
+    }
 
 
     // WEB REGISTER FORM (for testing)

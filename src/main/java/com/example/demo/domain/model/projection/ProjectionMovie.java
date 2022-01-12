@@ -1,6 +1,5 @@
 package com.example.demo.domain.model.projection;
 
-import com.example.demo.domain.model.Actor;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;

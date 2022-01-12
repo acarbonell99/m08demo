@@ -1,6 +1,5 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.dto.FileToShow;
 import com.example.demo.domain.model.File;
 import com.example.demo.domain.model.projection.ProjectionMovie;
 import org.springframework.data.jpa.repository.JpaRepository;
