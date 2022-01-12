@@ -1,8 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.model.projection.ProjectionUser;
 import com.example.demo.domain.model.User;
-import com.example.demo.domain.model.projection.ProjectionUserDetail;
+import com.example.demo.domain.model.projection.ProjectionUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

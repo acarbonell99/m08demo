@@ -90,7 +90,6 @@ public class UserController {
             User authenticatedUser = userRepository.findByUsername(authentication.getName());
 
             if (authenticatedUser != null) {
-//            userRepository.findByUsername(authentication.getName(), ProjectionFavorites.class);
                 return ResponseEntity.ok().body(userRepository.findByUsername(authentication.getName(), ProjectionFavorites.class));
             }
         }
