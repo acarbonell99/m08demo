@@ -1,12 +1,11 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.model.Actor;
-import com.example.demo.domain.model.projection.ProjectionActor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface ActorRepository extends JpaRepository<Actor, UUID> {
-    List<ProjectionActor> findBy();
+    <T> List<T> findBy(Class<T> type);
 }

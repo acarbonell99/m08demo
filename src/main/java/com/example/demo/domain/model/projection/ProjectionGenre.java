@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Set;
 import java.util.UUID;
 
-public interface ProjectionActor {
-    UUID getActorid();
-    String getName();
+public interface ProjectionGenre {
+    UUID getGenreid();
+    String getLabel();
 
-    @JsonIgnoreProperties("actors")
+    @JsonIgnoreProperties("genres")
     Set<ProjectionMovie> getMovies();
 }

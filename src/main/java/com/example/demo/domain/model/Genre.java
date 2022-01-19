@@ -1,7 +1,5 @@
 package com.example.demo.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
@@ -16,6 +14,5 @@ public class Genre {
     public String label;
 
     @ManyToMany(mappedBy = "genres")
-    @JsonIgnoreProperties("genres")
     public Set<Movie> movies;
 }

@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.RequestFavorite;
-import com.example.demo.domain.model.Favorite;
 import com.example.demo.domain.dto.RequestUserRegister;
 import com.example.demo.domain.dto.ResponseList;
 import com.example.demo.domain.dto.ResponseMessage;
+import com.example.demo.domain.model.Favorite;
 import com.example.demo.domain.model.User;
 import com.example.demo.domain.model.projection.ProjectionFavorites;
+import com.example.demo.domain.model.projection.ProjectionUser;
 import com.example.demo.domain.model.projection.ProjectionUserDetail;
 import com.example.demo.repository.FavoriteRepository;
 import com.example.demo.repository.UserRepository;
@@ -42,7 +43,7 @@ public class UserController {
 
     @GetMapping("/")
     public ResponseEntity<?> getALl(){
-        return ResponseEntity.ok().body(ResponseList.list(userRepository.findBy()));
+        return ResponseEntity.ok().body(ResponseList.list(userRepository.findBy(ProjectionUser.class)));
     }
 
     @GetMapping("/{id}")
@@ -98,6 +99,7 @@ public class UserController {
     }
 
 
+    /*
     // WEB REGISTER FORM (for testing)
     @GetMapping("/register/web")
     public String hack(){
@@ -106,4 +108,5 @@ public class UserController {
                 "<input id='password' type='password' placeholder='Password'>" +
                 "<input type='button' value='Register' onclick='fetch(\"/users/register/\",{method:\"POST\",headers:{\"Content-Type\":\"application/json\"},body:`{\"username\":\"${username.value}\",\"password\":\"${password.value}\"}`})'></div>";
     }
+    */
 }

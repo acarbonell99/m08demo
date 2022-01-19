@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.ResponseList;
+import com.example.demo.domain.model.projection.ProjectionActor;
 import com.example.demo.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,6 @@ public class ActorController {
 
     @GetMapping("/")
     public ResponseEntity<?> findAllActors(Authentication authentication) {
-        return ResponseEntity.ok().body(new ResponseList(actorRepository.findBy()));
+        return ResponseEntity.ok().body(new ResponseList(actorRepository.findBy(ProjectionActor.class)));
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.model.File;
+import com.example.demo.domain.model.projection.ProjectionFile;
 import com.example.demo.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,7 +34,7 @@ public class FileController {
 
     @GetMapping
     public ResponseEntity<?> devolverTodos(){
-        return ResponseEntity.ok().body(fileRepository.findBy());
+        return ResponseEntity.ok().body(fileRepository.findBy(ProjectionFile.class));
     }
 
     @GetMapping("/{id}")

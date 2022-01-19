@@ -11,4 +11,7 @@ public interface ProjectionMovie {
 
     @JsonIgnoreProperties("movies")
     Set<ProjectionActor> getActors();
+
+    @JsonIgnoreProperties("movies")
+    Set<ProjectionGenre> getGenres();
 }
