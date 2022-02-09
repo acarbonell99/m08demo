@@ -50,12 +50,12 @@ public class FileController {
     }
 
 
-//    @GetMapping
-//    public String hack() {
-//        return "<form method='POST' enctype='multipart/form-data' style='display:flex;'>" +
-//                "<input id='file' type='file' name='file' style='display:none' onchange='preview.src=window.URL.createObjectURL(event.target.files[0])'>" +
-//                "<label for='file' style='border:1px dashed #999'><img id='preview' style='width:64px;max-height:64px;object-fit:contain;border:none'></label>" +
-//                "<input type='submit' style='background:#0096f7;color: white;border: 0;border-radius: 3px;padding: 8px;' value='Upload'>" +
-//                "</form><div style='display:flex;flex-wrap:wrap;gap:1em;'>" + fileRepository.getFileIds().stream().map(id -> "<img src='/files/"+id+"' style='width:12em;height:12em;object-fit:contain'>").collect(Collectors.joining()) + "</div>";
-//    }
+    @GetMapping
+    public String hack() {
+       return "<form method='POST' enctype='multipart/form-data' style='display:flex;'>" +
+                "<input id='file' type='file' name='file' style='display:none' onchange='preview.src=window.URL.createObjectURL(event.target.files[0])'>" +
+                "<label for='file' style='border:1px dashed #999'><img id='preview' style='width:64px;max-height:64px;object-fit:contain;border:none'></label>" +
+                "<input type='submit' style='background:#0096f7;color: white;border: 0;border-radius: 3px;padding: 8px;' value='Upload'>" +
+                "</form><div style='display:flex;flex-wrap:wrap;gap:1em;'>" + fileRepository.getFileIds().stream().map(id -> "<img src='/files/"+id+"' style='width:12em;height:12em;object-fit:contain'>").collect(Collectors.joining()) + "</div>";
+    }
 }
