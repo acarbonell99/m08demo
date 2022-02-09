@@ -50,7 +50,7 @@ public class FileController {
     }
 
 
-    @GetMapping
+    @GetMapping("/web")
     public String hack() {
        return "<form method='POST' enctype='multipart/form-data' style='display:flex;'>" +
                 "<input id='file' type='file' name='file' style='display:none' onchange='preview.src=window.URL.createObjectURL(event.target.files[0])'>" +
